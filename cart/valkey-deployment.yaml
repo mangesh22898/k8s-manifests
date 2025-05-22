@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: valkey-cart
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: valkey-cart
+  template:
+    metadata:
+      labels:
+        app: valkey-cart
+    spec:
+      containers:
+      - name: valkey
+        image: valkey/valkey:8.0-alpine
+        ports:
+        - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: valkey-cart
+spec:
+  selector:
+    app: valkey-cart
+  ports:
+    - port: 6379
